@@ -33,4 +33,9 @@ body{
     font-family: monospace;
     font-size: 25px;
     padding: 10px;
+    transition: .3s;
+}
+
+#restartBtn:hover{
+    transform: scale(110%);
 }

@@ -17,6 +17,7 @@ const ballColor = "yellow";
 
 const playerSize = 75;
 const playerSpd = 20;
+const enemySpd = 2;
 
 const unitSize = 15;
 
@@ -27,8 +28,14 @@ let enemyMov = 4;
 
 let playerPosition = gameHeight/2-playerSize/2;
 let enemyPosition = gameHeight/2-playerSize/2;
+
+const ballSpd = 5;
+let ballAngle = 0;
 let ballX = gameWidth/2;
 let ballY = gameHeight/2;
+let ballYDirection = ballSpd;
+let ballXDirection = ballSpd;
+
 
 let playerScore = 0;
 let enemyScore = 0;
@@ -49,10 +56,16 @@ function nextTick(){
             clearBoard();
             movePlayer();
             drawPlayer();
+            moveEnemy();
             drawEnemy();
+            checkCollisionWalls();
+            checkCollisionPlayer();
+            checkCollisionEnemy();
+            moveBall();
             drawBall();
+            checkGoals();
             nextTick();
-        }, 0);
+        }, 10);
     }
 };
 
@@ -62,9 +75,43 @@ function drawBall(){
 };
 
 function moveBall(){
-
+    ballX += ballXDirection * Math.cos(ballAngle);
+    ballY -= ballYDirection * Math.sin(ballAngle);
 }
 
+function checkCollisionWalls(){
+    if(ballY < 0 || ballY >= gameHeight-unitSize){ 
+        ballYDirection *= -1;
+    }
+}
+
+function checkCollisionPlayer(){
+    if(ballX <= 45 && ballY > playerPosition && ballY < playerPosition+playerSize){
+        let min = -Math.PI/3;
+        let max = Math.PI/3
+        ballAngle = Math.random()*(max-min)+min;
+    }
+}
+
+function checkCollisionEnemy(){
+    if(ballX + unitSize >= gameWidth-unitSize*3 && ballY > enemyPosition && ballY < enemyPosition+playerSize){
+        let min = 2*Math.PI/3;
+        let max = 4*Math.PI/3
+        ballAngle = Math.random()*(max-min)+min;
+    }
+}
+
+function checkGoals(){
+    if(ballX < 0){
+        enemyScore++;
+        enemyScoreText.innerHTML = enemyScore;
+        restartMatch();
+    }else if(ballX > gameWidth){
+        playerScore++;
+        playerScoreText.innerHTML = playerScore;
+        restartMatch();
+    }
+}
 
 function clearBoard(){
     ctx.fillStyle = boardBackground;
@@ -109,7 +156,12 @@ function drawPlayer(){
 };
 
 function moveEnemy(){
-
+    if(enemyPosition +playerSize/2 < ballY){
+        enemyPosition += enemySpd;
+    }
+    else if(enemyPosition+playerSize/2 >= ballY){
+        enemyPosition -= enemySpd;
+    }
 };
 
 function drawEnemy(){
@@ -118,9 +170,17 @@ function drawEnemy(){
 };
 
 function restartMatch(){
-
+    ballX = gameWidth/2;
+    ballY = gameHeight/2;
+    playerPosition = gameHeight/2-playerSize/2;
+    enemyPosition = gameHeight/2-playerSize/2;
+    ballAngle = Math.PI;
 };
 
 function restartGame(){
-
+    playerScore = 0;
+    enemyScore = 0;
+    playerScoreText.innerHTML = playerScore;
+    enemyScoreText.innerHTML = enemyScore;
+    restartMatch();
 };
