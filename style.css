@@ -1,0 +1,36 @@
+body{
+    background-color: rgb(49, 49, 49);
+    text-align: center;
+}
+
+#gameBoard{
+    border: solid 3px white;
+}
+
+.pointsWrapper{
+    display: flex;
+    justify-content: space-around;
+}
+
+.points{
+    font-family: monospace;
+    font-size: 100px;
+    margin: 0;
+}
+
+.player{
+    color: cyan;
+}
+
+.enemy{
+    color: red;
+}
+
+#restartBtn{
+    background-color: #00000000;
+    border: 2px solid aliceblue;
+    color: aliceblue;
+    font-family: monospace;
+    font-size: 25px;
+    padding: 10px;
+}
