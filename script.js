@@ -51,7 +51,6 @@ function gameStart(){
 };
 
 function nextTick(){
-    if(running){
         setTimeout(()=>{
             clearBoard();
             movePlayer();
@@ -65,8 +64,7 @@ function nextTick(){
             drawBall();
             checkGoals();
             nextTick();
-        }, 10);
-    }
+     10}, 10)
 };
 
 function drawBall(){
@@ -86,7 +84,7 @@ function checkCollisionWalls(){
 }
 
 function checkCollisionPlayer(){
-    if(ballX <= 45 && ballY > playerPosition && ballY < playerPosition+playerSize){
+    if(ballX <= 45 && ballX >= 30 && ballY > playerPosition && ballY < playerPosition+playerSize){
         let min = -Math.PI/3;
         let max = Math.PI/3
         ballAngle = Math.random()*(max-min)+min;
@@ -94,7 +92,7 @@ function checkCollisionPlayer(){
 }
 
 function checkCollisionEnemy(){
-    if(ballX + unitSize >= gameWidth-unitSize*3 && ballY > enemyPosition && ballY < enemyPosition+playerSize){
+    if(ballX + unitSize >= gameWidth-unitSize*3 && ballX + unitSize <= gameWidth-unitSize*2 && ballY > enemyPosition && ballY < enemyPosition+playerSize){
         let min = 2*Math.PI/3;
         let max = 4*Math.PI/3
         ballAngle = Math.random()*(max-min)+min;
