@@ -16,7 +16,7 @@ const enemyColor = "red";
 const ballColor = "yellow";
 
 const playerSize = 75;
-const playerSpd = 20;
+const playerSpd = 5;
 const enemySpd = 2;
 
 const unitSize = 15;
@@ -123,29 +123,28 @@ function changeDirection(event){
     const Down = 40;
 
     switch(true){
-        case(keyPressed == Up):
-            playerMov = -playerSpd;
+        case keyPressed == Down:
+            playerMov = 1;
             break;
-        case(keyPressed == Down):
-            playerMov = playerSpd;
+        case keyPressed == Up:
+            playerMov = -1;
             break;
         default:
             playerMov = 0;
-    }
-    keyPressed = 0;
+    } 
+
 };
 
 function movePlayer(){
 
-    playerPosition += playerMov;
-    playerMov = 0;
+    playerPosition += playerSpd*playerMov;
 
-    if(playerPosition < 0){
+    if (playerPosition <= 0 ){
         playerPosition = 0
-    }
-    else if(playerPosition >= gameHeight-playerSize){
+    }else if (playerPosition + playerSize >= gameHeight){
         playerPosition = gameHeight-playerSize;
     }
+
 }
 
 function drawPlayer(){
