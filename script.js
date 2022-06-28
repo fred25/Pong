@@ -153,12 +153,22 @@ function drawPlayer(){
 };
 
 function moveEnemy(){
+    /*
     if(enemyPosition +playerSize/2 < ballY){
         enemyPosition += enemySpd;
     }
     else if(enemyPosition+playerSize/2 >= ballY){
         enemyPosition -= enemySpd;
     }
+*/
+    enemyPosition-=4;
+
+    if (enemyPosition <= 0 ){
+        enemyPosition = 0
+    }else if (enemyPosition + playerSize >= gameHeight){
+        enemyPosition = gameHeight-playerSize;
+    }
+
 };
 
 function drawEnemy(){
